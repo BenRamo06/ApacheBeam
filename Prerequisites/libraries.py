@@ -1,6 +1,6 @@
 import os
 
-# Run and print a shell command.
+# Run and print a shell command
 def run(cmd):
   os.system(cmd)
   print('Command finished >> {}'.format(cmd))
