@@ -1,7 +1,6 @@
 import apache_beam as beam
 
-
-# Create Pipeline without options
+# We created a pipeline without arguments
 with beam.Pipeline() as pipeline:
 
 # Create PCollection with a list
