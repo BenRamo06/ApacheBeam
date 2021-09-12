@@ -1,8 +1,7 @@
 import apache_beam as beam
 
 def Divide_Rows(row):
-  yield row.split(',')
-
+    yield row.split(',')
 
 with beam.Pipeline() as pipeline:
     
