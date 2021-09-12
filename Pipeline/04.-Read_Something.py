@@ -4,5 +4,5 @@ import apache_beam as beam
 with beam.Pipeline() as pipeline:
     
     # Read file from text
-    read_file = (pipeline | 'Read File' >> beam.io.ReadFromText('files/InfoDataflow', skip_header_lines = 1)
+    read_file = (pipeline | 'Read File' >> beam.io.ReadFromText('inputs/InfoDataflow', skip_header_lines = 1)
                           | beam.Map(print))
