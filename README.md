@@ -40,7 +40,7 @@ Create a pipeline can be [two forms](https://github.com/BenRamo06/ApacheBeam/blo
 
 
 
-# Create PCollection
+## Create PCollection
 
 We could create a PCollection from: list, set or dictionaries
 
