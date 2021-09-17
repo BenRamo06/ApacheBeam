@@ -1,4 +1,3 @@
-from os import read
 import apache_beam as beam
 
 def filters(row):
