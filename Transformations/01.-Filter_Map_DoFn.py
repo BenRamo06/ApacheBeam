@@ -15,7 +15,7 @@ with beam.Pipeline() as pipeline:
     valid_rows = read_file | 'Amount grather than 0' >> beam.Filter(lambda x: float(x[3]) > 0)
     
     
-    # We 
+    # We use Filter function with DoFn
     valid_rows = read_file | 'Amount grather than 0' >> beam.Filter(valid_amount, max = 1469)
 
     print_data = valid_rows | 'Print' >> beam.Map(print)
