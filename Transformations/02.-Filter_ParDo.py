@@ -21,8 +21,7 @@ class Filter(beam.DoFn):
 
 with beam.Pipeline() as pipeline:
 
-    read_file  = pipeline | 'Read File' >> beam.io.ReadFromText('inputs/InfoDataflow', skip_header_lines = 1)
+    read_file  =   pipeline | 'Read File' >> beam.io.ReadFromText('inputs/InfoDataflow', skip_header_lines = 1)
 
     valid_rows = (read_file | 'Filter' >> beam.ParDo(Filter([[1,'%d-%m-%y']]))  
-                            | 'Print'  >> beam.Map(print)
-                 )
+                            | 'Print'  >> beam.Map(print))

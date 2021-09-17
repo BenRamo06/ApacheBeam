@@ -11,11 +11,11 @@ with beam.Pipeline() as pipeline:
     read_file  = (pipeline | 'Read File' >> beam.io.ReadFromText('inputs/InfoDataflow', skip_header_lines = 1)
                            | 'Split' >> beam.Map(lambda x: x.split(',')))
 
-    # We use 
+    # We use Map function with Filter
     valid_rows = read_file | 'Amount grather than 0' >> beam.Filter(lambda x: float(x[3]) > 0)
     
     
-    #
+    # We 
     valid_rows = read_file | 'Amount grather than 0' >> beam.Filter(valid_amount, max = 1469)
 
     print_data = valid_rows | 'Print' >> beam.Map(print)
