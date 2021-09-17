@@ -29,7 +29,7 @@ with beam.Pipeline() as pipeline:
     
     filters   = divide     | 'Filter data' >> beam.Filter(filters)
 
-    valids, fails = filters | 'Valid and Fails data ' >> beam.ParDo(convert(header = 'id,date,amount1,amount2,amount3,amount4,target')).with_outputs('valids', 'fails')
+    valids, fails = filters | 'Valid and Fails data' >> beam.ParDo(convert(header = 'id,date,amount1,amount2,amount3,amount4,target')).with_outputs('valids', 'fails')
 
     export_fails  = fails  | 'Export Fails'  >> beam.io.WriteToText(file_path_prefix = 'outputs/TextFails', file_name_suffix = '.txt' )
 
