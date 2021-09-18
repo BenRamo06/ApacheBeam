@@ -3,7 +3,6 @@ import apache_beam as beam
 
 from sys import argv
 from apache_beam.options.pipeline_options import PipelineOptions
-from apache_beam.transforms.core import Map
 
 
 parser = argparse.ArgumentParser()
