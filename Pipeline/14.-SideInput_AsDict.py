@@ -25,7 +25,7 @@ with beam.Pipeline() as pipe:
     read_file    = (pipe    | 'Read File' >> beam.io.ReadFromText('inputs/jsonFile')
                             | 'Load Json' >> beam.Map(lambda x: json.loads(x)))
 
-    # The validation always will be on key  
+    # The validation always will be in key  
     assign_side = read_file | 'Asign value' >> beam.Map(asign_side, side_input = beam.pvalue.AsDict(input_side))
 
 
