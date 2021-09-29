@@ -26,5 +26,7 @@ with beam.Pipeline() as pipe:
     
     sql_query = row_data  | SqlTransform(""" SELECT id FROM PCOLLECTION WHERE id >= 1""")
 
-    print_data = sql_query | beam.Map(print)
+    export_data = row_data | beam.io.WriteToText('outputs/ExampleSQL')
+
+    #print_data = sql_query | beam.Map(print)
 

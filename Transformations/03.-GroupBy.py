@@ -17,5 +17,4 @@ with beam.Pipeline() as pipe:
 
     grouped_def = grouped | beam.Map(printer) 
 
-
     print_data = grouped | beam.Map(print)
