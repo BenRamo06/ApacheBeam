@@ -1,25 +1,32 @@
-import apache_beam as beam
+import logging
+import apache_beam
 
-def sum_l(l):                       
-    s0, s1 = 0, 0                                         
-    for i in range(len(l)):                                        
-        s0 += float(l[i][0])                                                      
-        s1 += float(l[i][1])                
-    return [s0, s1] 
+class WriteToGCS(DoFn):
+    def __init__(self, output_path):
+        self.output_path = output_path
 
-with beam.Pipeline() as p:
-    read =  (p  | 'Read Input' >> beam.Create([ 'name1,1,place1,2.,1.5',
-                                                'name1,1,place1,3.,0.5',
-                                                'name1,1,place2,1.,1',
-                                                'name1,2,place3,2.,1.5',
-                                                'name2,2,place3,3.,0.5'
-                                             ])
-                | 'Split Commas' >> beam.Map(lambda x: x.split(','))
-                | 'Prepare Keys' >> beam.Map(lambda x: (x[:-2], x[-2:]))
-                | 'Group Each Key' >> beam.GroupByKey()
-                | 'Make Summation' >> beam.Map(lambda x: [x[0], sum_l([e for e in x[1]])])
-                #| 'Write Results' >> beam.io.WriteToText('results.csv'))
-    )
+    def process(self,message):
+        
+        """Write messages in a batch to Google Cloud Storage.
 
+        Parameters
+        ----------
+        message : Pcollection.
+            The input message from Pub/Sub Topic
 
-    print_data = read | 'Print' >> beam.Map(print)
+        Raises
+        ------
+        Exception
+            Raise an exception in case of missing bucket.
+        """
+        try:
+            logging.getLogger().setLevel(logging.INFO)
+            logging.info(f"input message: {message}")
+            filename = "-".join([self.output_path, str(datetime.datetime.now())])
+            logging.info(f"output_path : {filename}")
+            with io.gcsio.GcsIO().open(filename=filename, mode="w") as f:
+                logging.info(f"message to save: {message}")
+                f.write(f"message: {message}".encode("utf-8"))
+        except Exception as e:
+            logging.info(f"Exception catched {e}")
+            pass
