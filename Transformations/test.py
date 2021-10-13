@@ -55,11 +55,12 @@ class valid_strcuture(beam.DoFn):
 
 
 def to_json(element):
-    return  json.dumps( {
-                            "id": str(element[0]),
-                            "amount" : element[1],
-                            "process_time" :  int(time.mktime(datetime.utcnow().timetuple()))
-                        })
+    return (str(element[0]), int(time.mktime(datetime.utcnow().timetuple())))
+    # return  json.dumps({
+    #                        "id": str(element[0]),
+    #                        # "amount" : element[1],
+    #                        "process_time" :  int(time.mktime(datetime.utcnow().timetuple()))
+    #                    })
 
 with beam.Pipeline() as pipe:
 
