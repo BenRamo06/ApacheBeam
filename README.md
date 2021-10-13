@@ -32,12 +32,10 @@ We need to install the next [libraries](https://github.com/BenRamo06/ApacheBeam/
 
 ## Create Pipeline
 
-Create a pipeline can be [two forms](https://github.com/BenRamo06/ApacheBeam/blob/Dev_ApacheBeam/Pipeline/01.-Create_pipeline.py):
+Create a pipeline can be [two forms](https://github.com/BenRamo06/ApacheBeam/blob/Dev_ApacheBeam/Pipeline/01.-Create_Pipeline.py):
 
 * Sentence **with**
 * Sentence **run**
-
-
 
 
 ## Create PCollection
