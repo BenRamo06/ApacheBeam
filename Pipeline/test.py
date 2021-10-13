@@ -1,6 +1,8 @@
 import logging
 import apache_beam
 
+
+
 class WriteToGCS(DoFn):
     def __init__(self, output_path):
         self.output_path = output_path
