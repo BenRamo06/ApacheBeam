@@ -6,8 +6,6 @@ from datetime import datetime
 from apache_beam.options.pipeline_options import PipelineOptions
 from apache_beam.transforms.core import Map
 
-
-
 class cast_to_datetime(beam.DoFn):
     def __init__(self, formats):
         self.formats = formats
