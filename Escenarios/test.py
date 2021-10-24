@@ -33,8 +33,8 @@ class AddDateTimestamp(beam.DoFn):
 
     def process (self, element):
 
-        yield print(type({'id': element['id'],
-                'salary' : element['process']}))
+        yield {'id': element['id'],
+                'salary' : element['process']}
 
         
 
