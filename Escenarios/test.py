@@ -32,13 +32,11 @@ def definition():
 class AddDateTimestamp(beam.DoFn):
 
     def process (self, element):
-
-        yield {'id': element['id'],
-                'salary' : element['process']}
-
         
-
-
+        yield {'id': element['id'],
+               'salary' : element['salary'],
+               'cities' : [i['city'] for i in element['addresses'] if i['status'] == 'current' or i['status'] == 'previous']
+              }
 
 
 def etl(args_cmd, args_beam):
