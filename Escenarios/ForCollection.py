@@ -6,6 +6,7 @@ from datetime import datetime
 from apache_beam.options.pipeline_options import PipelineOptions
 
 
+
 parser = argparse.ArgumentParser()
 
 parser.add_argument('--input_files',
