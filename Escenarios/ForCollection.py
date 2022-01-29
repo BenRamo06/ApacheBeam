@@ -151,3 +151,4 @@ with beam.Pipeline(options = PipelineOptions(args_beam)) as pipeline:
 # --field_name "AUD_UPD_DT" \
 # --table_schema "id int" \
 # --runner DirectRunner
+
