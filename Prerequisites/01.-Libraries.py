@@ -16,3 +16,7 @@ run('pip install apache-beam')
 #run('pip install apache-beam[gcp]')
 #run('pip install apache-beam[interactive]')
 #run('pip install google-apitools')
+
+# pip3 install virtualenv
+# python3 -m virtualenv env
+# source env/bin/activate
