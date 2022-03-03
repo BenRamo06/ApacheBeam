@@ -17,7 +17,7 @@ run('pip install apache-beam')
 ## Install virtualenv package: 
 #pip3 install virtualenv
 ## Create new environment:
-#python3.8 -m virtualenv env
+#python3 -m virtualenv env
 ## Activate environment:
 #source env/bin/activate
 
@@ -43,3 +43,6 @@ run('pip install apache-beam')
 #sudo make altinstall
 #-- Check version python
 #python3.8 --version
+
+# virtualenv --python=/usr/local/bin/python3.8 <path_enviroments>
+# source <path_enviroments>/bin/activate
