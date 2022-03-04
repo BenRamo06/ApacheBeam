@@ -60,7 +60,8 @@ with beam.Pipeline(options = PipelineOptions(args_beam)) as pipeline:
     exportBQ = valids | 'Export BQ' >> beam.io.WriteToBigQuery(table='prueba', dataset='misdatos', project='cosmic-bonfire-313519', 
                                                                schema='ID:NUMERIC,INIDATE:DATE,AMOUNT:NUMERIC', 
                                                                create_disposition=beam.io.BigQueryDisposition.CREATE_IF_NEEDED,
-                                                               write_disposition=beam.io.BigQueryDisposition.WRITE_TRUNCATE)
+                                                               write_disposition=beam.io.BigQueryDisposition.WRITE_TRUNCATE,
+                                                               additional_bq_parameters={'timePartitioning':{'type':'DAY','field':'INIDATE'}})
 
 
     exportGCS = invalids | 'Export GCS' >> beam.io.WriteToText(file_path_prefix='{0}{1}/invalids/'.format(args_cmd.output_files, args_cmd.table_name), file_name_suffix= '.txt')
