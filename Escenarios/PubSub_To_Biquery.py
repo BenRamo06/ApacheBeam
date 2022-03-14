@@ -8,7 +8,6 @@ import json
 import logging
 import time
 from typing import Any, Dict, List
-
 import apache_beam as beam
 from apache_beam.options.pipeline_options import PipelineOptions
 import apache_beam.transforms.window as window
@@ -23,7 +22,6 @@ SCHEMA = ",".join(
         "last_date:TIMESTAMP",
     ]
 )
-
 
 def parse_json_message(message: str) -> Dict[str, Any]:
     """Parse the input json message and add 'score' & 'processing_time' keys."""
@@ -75,31 +73,31 @@ def run(
         )
 
 
-if __name__ == "__main__":
-    logging.getLogger().setLevel(logging.INFO)
+# if __name__ == "__main__":
+#     logging.getLogger().setLevel(logging.INFO)
 
-    parser = argparse.ArgumentParser()
-    parser.add_argument(
-        "--output_table",
-        help="Output BigQuery table for results specified as: "
-        "PROJECT:DATASET.TABLE or DATASET.TABLE.",
-    )
-    parser.add_argument(
-        "--input_subscription",
-        help="Input PubSub subscription of the form "
-        '"projects/<PROJECT>/subscriptions/<SUBSCRIPTION>."',
-    )
-    parser.add_argument(
-        "--window_interval_sec",
-        default=60,
-        type=int,
-        help="Window interval in seconds for grouping incoming messages.",
-    )
-    args, beam_args = parser.parse_known_args()
+#     parser = argparse.ArgumentParser()
+#     parser.add_argument(
+#         "--output_table",
+#         help="Output BigQuery table for results specified as: "
+#         "PROJECT:DATASET.TABLE or DATASET.TABLE.",
+#     )
+#     parser.add_argument(
+#         "--input_subscription",
+#         help="Input PubSub subscription of the form "
+#         '"projects/<PROJECT>/subscriptions/<SUBSCRIPTION>."',
+#     )
+#     parser.add_argument(
+#         "--window_interval_sec",
+#         default=60,
+#         type=int,
+#         help="Window interval in seconds for grouping incoming messages.",
+#     )
+#     args, beam_args = parser.parse_known_args()
 
-    run(
-        input_subscription=args.input_subscription,
-        output_table=args.output_table,
-        window_interval_sec=args.window_interval_sec,
-        beam_args=beam_args,
-    )
+#     run(
+#         input_subscription=args.input_subscription,
+#         output_table=args.output_table,
+#         window_interval_sec=args.window_interval_sec,
+#         beam_args=beam_args,
+#     )

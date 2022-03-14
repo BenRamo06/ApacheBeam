@@ -15,6 +15,6 @@ with beam.Pipeline() as pipe:
 
     grouped = read_file | beam.GroupBy(lambda x: (x['id'], x['process'])).aggregate_field(lambda x: x['salary'], max, 'last_salary')
 
-    grouped_def = grouped | beam.Map(printer) 
+    # grouped_def = grouped | beam.Map(printer) 
 
     print_data = grouped | beam.Map(print)
