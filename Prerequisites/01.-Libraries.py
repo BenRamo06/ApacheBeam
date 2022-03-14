@@ -23,6 +23,7 @@ run('pip install apache-beam')
 
 ## Install libraries to GCP
 # pip3 install apache-beam[gcp]
+# pip3 install google-cloud-storage
 
 ## Exit environment
 # deactivate
@@ -31,6 +32,9 @@ run('pip install apache-beam')
 
 
 
+
+# rm Python-3.8.0.tgz
+# rm -rf Python-3.8.0
 #-- Download version Python
 #wget https://www.python.org/ftp/python/3.8.0/Python-3.8.0.tgz
 #-- unzip file
@@ -44,5 +48,8 @@ run('pip install apache-beam')
 #-- Check version python
 #python3.8 --version
 
-# virtualenv --python=/usr/local/bin/python3.8 <path_enviroments>
-# source <path_enviroments>/bin/activate
+# virtualenv --python=/usr/local/bin/python3.8 <enviroment>
+# source <enviroment>/bin/activate
+
+# pip3 install apache-beam[gcp]
+# pip3 install google-cloud-storage
