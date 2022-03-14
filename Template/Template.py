@@ -10,32 +10,16 @@ from apache_beam.options.value_provider import StaticValueProvider
 logging.getLogger().setLevel(logging.INFO)
 
 
-
-
 class TemplateOptions(PipelineOptions):
     @classmethod
     def _add_argparse_args(cls, parser):
+        
+        parser.add_value_provider_argument('--table_name', type =str)
 
+        parser.add_value_provider_argument('--input_files', type =str)
 
-        # We change add_argument by add_value_provider_argument
-        parser.add_value_provider_argument('--table_name',
-                                            required = False,
-                                            default = '',
-                                            help = 'Name table')
+        parser.add_value_provider_argument('--output_files', type =str)
 
-
-        parser.add_value_provider_argument('--input_files',
-                            required = False,
-                            default = '',
-                            help = 'Path files to process')
-
-        parser.add_value_provider_argument('--output_files',
-                            required = False,
-                            default = '',
-                            help = 'Path files to process')
-
-
-# We create PipeliOptions as view_as, we call class with add_value_provider_argument(s)
 process_option = PipelineOptions().view_as(TemplateOptions)
 
 class divide_data(beam.DoFn):
@@ -59,42 +43,60 @@ class divide_data(beam.DoFn):
         except:
             yield beam.pvalue.TaggedOutput('errors', element)
 
-with beam.Pipeline(options = PipelineOptions(options = process_option)) as pipeline:
+
+class ImportBQ(beam.PTransform):
+    def __init__(self, name_table):
+        self.name_table = name_table
+
+    def expand(self, collection):
+
+        return (collection | 'Go to BQ' >> beam.io.WriteToBigQuery(table=self.name_table,
+                                                                  schema='ID:NUMERIC,INIDATE:DATE,AMOUNT:NUMERIC', 
+                                                                  create_disposition=beam.io.BigQueryDisposition.CREATE_IF_NEEDED,
+                                                                  write_disposition=beam.io.BigQueryDisposition.WRITE_TRUNCATE,
+                                                                  additional_bq_parameters={'timePartitioning':{'type':'DAY','field':'INIDATE'}}))
+
+    
+
+class ExportGCS(beam.PTransform):
+    def __init__(self, name_path, name_table, name_export):
+        self.name_path = name_path
+        self.name_table = name_table
+        self.name_export = name_export
+
+    def expand(self, collection):
+
+        return (
+                collection | 'Export ' + self.name_export >> beam.io.WriteToText(self.name_path)
+               )
+    
+
+
+with beam.Pipeline(options = PipelineOptions(options = process_option, save_main_session=True)) as pipeline:
 
     read_file = pipeline | 'Read' >> beam.io.ReadFromText(file_pattern = process_option.input_files, skip_header_lines = 1)
 
     valids, invalids, errors = read_file | 'Amount grater or equal than 0' >> beam.ParDo(divide_data('%d-%m-%y')).with_outputs('valids', 'invalids', 'errors')
 
-    exportBQ = valids | 'Export BQ' >> beam.io.WriteToBigQuery(table='prueba', dataset='misdatos', project='cosmic-bonfire-313519', 
-                                                               schema='ID:NUMERIC,INIDATE:DATE,AMOUNT:NUMERIC', 
-                                                               create_disposition=beam.io.BigQueryDisposition.CREATE_IF_NEEDED,
-                                                               write_disposition=beam.io.BigQueryDisposition.WRITE_TRUNCATE,
-                                                               additional_bq_parameters={'timePartitioning':{'type':'DAY','field':'INIDATE'}})
+    exportBQ = valids | 'Export BQ' >> ImportBQ(name_table=process_option.table_name)
 
+    export_invalids = invalids | 'Export Invalids' >> ExportGCS(name_path=process_option.output_files, name_table=process_option.table_name, name_export= 'invalids')
 
-    exportGCS = invalids | 'Export GCS' >> beam.io.WriteToText(file_path_prefix='{0}{1}/invalids/'.format(process_option.output_files, process_option.table_name), file_name_suffix= '.txt')
-
-    exportErrors = errors | 'Export Errors' >> beam.io.WriteToText(file_path_prefix='{0}{1}/errors/'.format(process_option.output_files, process_option.table_name), file_name_suffix= '.txt')
+    
 
 
 
 
-
-
-# -- Create Template (template_location) --
 # python3 -m test \
-#  --table_name prueba \
-#  --input_files gs://misarchivos/dataflow_input/salida.txt \
-#  --output_files gs://misarchivos/dataflow_output/ \
 #  --region us-central1 \
 #  --runner DataflowRunner \
 #  --project cosmic-bonfire-313519 \
 #  --temp_location gs://misarchivos/temp/ \
 #  --template_location gs://misarchivos/templates/TEMPLATE_TEST
+#  ##--experiment=use_beam_bq_sink 
 
 
-
-# --- Use Template ---
-# gcloud dataflow jobs run test_execution \
+#  gcloud dataflow jobs run test_execution \
 #  --gcs-location gs://misarchivos/templates/TEMPLATE_TEST \
-#  --parameters table_name=prueba,input_files=gs://misarchivos/dataflow_input/salida.txt,output_files=gs://misarchivos/dataflow_output/
+#  --region us-central1 \
+#  --parameters table_name=cosmic-bonfire-313519:misdatos.prueba2,input_files=gs://misarchivos/dataflow_input/cambio.txt,output_files=gs://misarchivos/dataflow_output/
