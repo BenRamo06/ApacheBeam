@@ -1,0 +1,4 @@
+https://colab.research.google.com/github/apache/beam
+https://colab.research.google.com/github/tensorflow/workshops/blob/master/tfx_labs/Lab_2_Intro_to_Apache_Beam.ipynb#scrollTo=0BVhknBM7Frz
+https://beam.apache.org/documentation/programming-guide/
+https://jtaras.medium.com/building-a-simple-google-cloud-dataflow-pipeline-pubsub-to-google-cloud-storage-9bbf170e8bad
