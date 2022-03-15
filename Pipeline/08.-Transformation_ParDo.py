@@ -11,3 +11,8 @@ with beam.Pipeline() as pipeline:
                           | 'Divide row' >> beam.ParDo(Divide_Rows)
                           | beam.Map(print)
                 )
+
+
+
+# ParDo by default produces 1 input to multiple output (Flat Map), so We need to specify a iterable return 
+# This Pardo process in parallel and with multiple machines. 
