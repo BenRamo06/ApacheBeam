@@ -1,0 +1,12 @@
+There are 4 types of Windowing:
+- Tumbling/Fixed    (by time, create window by TIME and close windows pass this time)
+- Sliding
+- Session
+- Global (Default by Bounded and Unbounded)
+
+Time Notions
+
+Event time: It is the time when a particular event wich is to be calculated occurred at source
+Processing time : It is the time when a particular event start getting processed
+
+
