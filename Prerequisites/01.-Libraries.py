@@ -32,11 +32,12 @@ run('pip install apache-beam')
  
 
 
+##Install python in environment
 
 # rm Python-3.8.0.tgz
-# rm -rf Python-3.8.0
+# sudo rm -rf Python-3.8.0
 #-- Download version Python
-#wget https://www.python.org/ftp/python/3.8.0/Python-3.8.0.tgz
+# wget https://www.python.org/ftp/python/3.8.0/Python-3.8.0.tgz
 #-- unzip file
 #tar -xf Python-3.8.0.tgz
 #-- go to file
