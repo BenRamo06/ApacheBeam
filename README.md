@@ -42,5 +42,5 @@ Create a pipeline can be [two forms](https://github.com/BenRamo06/ApacheBeam/blo
 
 We could create a PCollection from: list, set or dictionaries
 
-A PCollection is immutable. Once created, you cannot add, remove, or change individual elements. A Beam Transform might process each element of a PCollection and generate new pipeline data (as a new PCollection), but it does not consume or modify the original input collection.
+A PCollection is immutable. Once created, you cannot add, remove, or change individual elements. A Beam Transform might process each element of a PCollection and generate new pipeline data (as a new PCollection), but it does not consume or modify the original input collection..
 
