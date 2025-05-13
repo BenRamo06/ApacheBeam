@@ -1,6 +1,6 @@
 from apache_beam import PTransform, PCollection, Map
 from apache_beam.io import ReadFromText
-from cnt_utils.parsers import row_to_array
+from utils.parsers import row_to_array
 from typing import Callable
 
 
